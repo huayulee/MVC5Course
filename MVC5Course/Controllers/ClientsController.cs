@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
+using MVC5Course.Models.ViewModels;
 
 namespace MVC5Course.Controllers
 {
@@ -129,6 +130,17 @@ namespace MVC5Course.Controllers
             db.Client.Remove(client);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginClientViewModel viewModel)
+        {
+            return View("LoginClient", viewModel);
         }
 
         protected override void Dispose(bool disposing)
