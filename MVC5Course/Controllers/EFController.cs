@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,12 +19,12 @@ namespace MVC5Course.Controllers
             return View(data);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(decimal? price )
         {
             Product product = new Product()
             {
                 ProductName = "White Treeee",
-                Price = 299,
+                Price = price,
                 Stock = 9,
                 Active = true
             };
@@ -43,7 +44,9 @@ namespace MVC5Course.Controllers
         public ActionResult Delete(int id)
         {
             var product = db.Product.Find(id);
+            this.db.OrderLine.RemoveRange(product.OrderLine);
             this.db.Product.Remove(product);
+            
             this.db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -53,7 +56,21 @@ namespace MVC5Course.Controllers
             var product = this.db.Product.Find(id);
             product.ProductName += "!";
 
-            this.db.SaveChanges();
+            try
+            {
+                this.db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult resultError in ex.EntityValidationErrors)
+                {
+                    foreach (var vErrors in resultError.ValidationErrors)
+                    {
+                        throw new DbEntityValidationException(string.Format("{0}發生錯誤。{1}", vErrors.PropertyName, vErrors.ErrorMessage));
+                    }
+                }
+            }
+
             return RedirectToAction("Index");
         }
 

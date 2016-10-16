@@ -4,12 +4,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>2016-10-16 練習</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新增一筆", "Create",new { price = 399 }, new { @class = "btn-sm btn-info" })
     &nbsp;|&nbsp;
-    @Html.ActionLink("價格上漲20%","Price20PercentUp")
+    @Html.ActionLink("價格上漲20%","Price20PercentUp", null, new { @class = "btn-sm btn-danger" })
 </p>
 <table class="table">
     <tr>
@@ -33,7 +33,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.ProductName)
              [
-            @Html.ActionLink("給我驚嘆號", "Update", new { id=item.ProductId},new { @class = "btn-sm btn-success" })
+            @Html.ActionLink("給我驚嘆號", "Update", new { id=item.ProductId})
             ]
         </td>
         <td>
