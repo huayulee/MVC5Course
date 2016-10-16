@@ -17,7 +17,7 @@ namespace MVC5Course.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            // return View(db.Product.ToList());
+            // return View(db.Product.ToList());.Where(p => p.IsDeleted == false)
             return View(db.Product.OrderByDescending(p => p.ProductId).Take(10).ToList());
         }
 
@@ -97,11 +97,13 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Product product = db.Product.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
             }
+
             return View(product);
         }
 
@@ -111,7 +113,9 @@ namespace MVC5Course.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Product.Find(id);
-            db.Product.Remove(product);
+            // db.Product.Remove(product);
+            product.IsDeleted = true;
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
