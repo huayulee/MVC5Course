@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
+using MVC5Course.Models.ViewModels;
 
 namespace MVC5Course.Controllers
 {
@@ -76,21 +77,36 @@ namespace MVC5Course.Controllers
 
         public ActionResult Price20PercentUp()
         {
-            var products = this.db.Product.Where(x=>x.ProductName.StartsWith("White"));
+            // 方法1.
+            ////var products = this.db.Product.Where(x=>x.ProductName.StartsWith("White"));
 
-            foreach (var item in products)
-            {
-                item.Price = item.Price * 1.2m;
-            }
+            ////foreach (var item in products)
+            ////{
+            ////    item.Price = item.Price * 1.2m;
+            ////}
 
-            this.db.SaveChanges();
+            ////this.db.SaveChanges();
+
+            // 方法2. 直接下T-SQL更新資料
+            string keyword = "%White%";
+            this.db.Database.ExecuteSqlCommand("UPDATE Product SET Price = Price * 1.2 WHERE ProductName LIKE @p0", keyword);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult ClientContribution()
         {
+            // 方法1.
             var data = this.db.vw_ClientContribution.Take(20);
+
+            return View(data);
+        }
+
+        public ActionResult ClientContributionBySQL(string keyword = "%Mary%")
+        {
+            // 方法2. 直接下T-SQL查詢資料
+            var data = this.db.Database.SqlQuery<ClientContributioViewModel>("SELECT c.ClientId,c.FirstName, c.LastName,(SELECT ISNULL(SUM(o.OrderTotal),0) FROM [dbo].[Order] o WHERE o.ClientId = c.ClientId) as OrderTotal FROM [dbo].[Client] as c WHERE c.FirstName LIKE @p0 ", keyword);
+
             return View(data);
         }
     }
