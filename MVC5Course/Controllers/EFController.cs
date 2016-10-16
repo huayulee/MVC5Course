@@ -109,5 +109,10 @@ namespace MVC5Course.Controllers
 
             return View(data);
         }
+
+        public ActionResult ClientContribution3(string keyword = "%Lisa%")
+        {
+            return View(this.db.usp_GetClientContribution("%" + keyword + "%"));
+        }
     }
 }

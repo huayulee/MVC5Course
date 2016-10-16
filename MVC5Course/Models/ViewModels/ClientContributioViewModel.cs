@@ -12,7 +12,7 @@ namespace MVC5Course.Models.ViewModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [DisplayName("客戶貢獻$$")]
-        [DisplayFormat(DataFormatString ="{0:###,##}")]
-        public decimal? OrderTotal { get; set; }
+        [DisplayFormat(DataFormatString = "{0:###,##}")]
+        public Nullable<decimal> OrderTotal { get; set; }
     }
 }
