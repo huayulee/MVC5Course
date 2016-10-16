@@ -87,5 +87,11 @@ namespace MVC5Course.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult ClientContribution()
+        {
+            var data = this.db.vw_ClientContribution.Take(20);
+            return View(data);
+        }
     }
 }

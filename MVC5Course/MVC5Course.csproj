@@ -216,6 +216,9 @@
       <DependentUpon>Fabrics.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\LoginClientViewModel.cs" />
+    <Compile Include="Models\vw_ClientContribution.cs">
+      <DependentUpon>Fabrics.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebForm1.aspx.cs">
@@ -316,6 +319,7 @@
     <Content Include="Views\Clients\LoginClient.cshtml" />
     <Content Include="Views\EF\Index.cshtml" />
     <Content Include="Views\EF\Details.cshtml" />
+    <Content Include="Views\EF\ClientContribution.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
