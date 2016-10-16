@@ -18,7 +18,7 @@ namespace MVC5Course.Controllers
         public ActionResult Index()
         {
             // return View(db.Product.ToList());.Where(p => p.IsDeleted == false)
-            return View(db.Product.OrderByDescending(p => p.ProductId).Take(10).ToList());
+            return View(db.Product.Where(p => p.IsDeleted == false).OrderByDescending(p => p.ProductId).Take(10).ToList());
         }
 
         // GET: Products/Details/5
