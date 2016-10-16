@@ -112,6 +112,7 @@ namespace MVC5Course.Controllers
 
         public ActionResult ClientContribution3(string keyword = "%Lisa%")
         {
+            // 使用Stored Procedure查詢
             return View(this.db.usp_GetClientContribution("%" + keyword + "%"));
         }
     }

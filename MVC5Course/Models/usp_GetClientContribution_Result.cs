@@ -10,9 +10,7 @@
 namespace MVC5Course.Models
 {
     using System;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class usp_GetClientContribution_Result
     {
         public int ClientId { get; set; }

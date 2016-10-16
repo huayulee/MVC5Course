@@ -280,7 +280,7 @@
           </AssociationSet>
           <EntitySet Name="vw_ClientContribution" EntityType="FabricsModel.vw_ClientContribution" />
           <FunctionImport Name="usp_GetClientContribution" ReturnType="Collection(FabricsModel.usp_GetClientContribution_Result)">
-            <Parameter Name="keyword" Mode="In" Type="String" />
+          <Parameter Name="keyword" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Product">
