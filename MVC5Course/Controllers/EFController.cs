@@ -11,8 +11,6 @@ namespace MVC5Course.Controllers
 {
     public class EFController : BaseController
     {
-        private FabricsEntities db = new FabricsEntities();
-
         // GET: EF
         public ActionResult Index()
         {
