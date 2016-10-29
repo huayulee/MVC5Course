@@ -1,0 +1,15 @@
+﻿@using MVC5Course.Models.ViewModels;
+
+@{
+    ViewBag.Title = "ResultPage";
+    var aaa = ViewBag.myData as LoginClientViewModel;
+}
+
+<h2>ResultPage</h2>
+@{
+    if (aaa != null)
+    {
+        @Html.Raw(string.Format("<h4>{0}{1}　新增成功。</h4>", aaa.FirstName, aaa.LastName))
+    }
+}
+<a href="@Url.Action("Create")">返回</a>
