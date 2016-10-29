@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MVC5Course.Models;
 using MVC5Course.Models.ViewModels;
 
 namespace MVC5Course.Controllers
 {
-    public class MBController : Controller
+    public class MBController : BaseController
     {
+        private ProductRepository repo = RepositoryHelper.GetProductRepository();
+
         // GET: MB
         public ActionResult Index()
         {
@@ -37,6 +40,32 @@ namespace MVC5Course.Controllers
         {
             ViewBag.myData = TempData["MyData"];
             return View();
+        }
+
+        public ActionResult ProductList()
+        {
+            var data = this.repo.Get所有產品_依據ProductId大到小排序(10);
+            return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult BatchUpdate(IList<ProductBatchUpdateViewModel> items)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (var item in items)
+                {
+                    var product = repo.Find(item.ProductId);
+                    product.ProductName = item.ProductName;
+                    product.Price = item.Price;
+                    product.Active = item.Active;
+                    product.Stock = item.Stock;
+                }
+
+                this.repo.UnitOfWork.Commit();
+            }
+
+            return RedirectToAction("ProductList");
         }
     }
 }

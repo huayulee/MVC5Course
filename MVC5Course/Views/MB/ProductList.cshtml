@@ -1,0 +1,56 @@
+﻿@model IEnumerable<MVC5Course.Models.Product>
+
+@{
+    ViewBag.Title = "產品批次更新";
+    var items = Model.ToList();
+}
+
+<h2>產品批次更新</h2>
+
+
+
+@using (Html.BeginForm("BatchUpdate", "MB"))
+{
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Active)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stock)
+        </th>
+    </tr>
+
+    @for (int i = 0; i < items.Count; i++)
+    {
+
+
+    <tr>
+        <td>
+            @Html.HiddenFor(modelItem => items[i].ProductId)
+            @Html.EditorFor(modelItem => items[i].ProductName)
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => items[i].Price)
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => items[i].Active)
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => items[i].Stock)
+        </td>
+    </tr>
+}
+
+</table>
+
+<input type="submit" name="btnBatchUpdate" value="批次更新" />
+
+}
