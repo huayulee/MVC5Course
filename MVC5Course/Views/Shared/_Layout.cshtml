@@ -39,6 +39,16 @@
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - 我的 ASP.NET MVC 5 應用程式</p>
+            @{
+                if (ViewBag.isDebug != null)
+                {
+                    Html.Raw("DEBUGGGGGGGGGGGGGGGG");
+                }
+                else
+                {
+                    Html.Raw("bbb");
+                }
+            }
         </footer>
     </div>
 

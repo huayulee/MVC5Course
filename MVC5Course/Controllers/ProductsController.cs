@@ -7,12 +7,15 @@ using MVC5Course.Models;
 
 namespace MVC5Course.Controllers
 {
+    [CheckWhere]
     public class ProductsController : BaseController
     {
         //private FabricsEntities db = new FabricsEntities();
         private ProductRepository repo = RepositoryHelper.GetProductRepository();
 
         // GET: Products
+        [LocalDebugOnly]
+        //[OutputCache(Duration =60,Location = System.Web.UI.OutputCacheLocation.Server)]
         [Route("☸Prod☸/List")]
         public ActionResult Index()
         {
