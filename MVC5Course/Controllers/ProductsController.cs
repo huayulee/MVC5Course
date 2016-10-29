@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
 
@@ -12,13 +9,24 @@ namespace MVC5Course.Controllers
 {
     public class ProductsController : Controller
     {
-        private FabricsEntities db = new FabricsEntities();
+        //private FabricsEntities db = new FabricsEntities();
+        private ProductRepository repo = RepositoryHelper.GetProductRepository();
 
         // GET: Products
         public ActionResult Index()
         {
-            // return View(db.Product.ToList());.Where(p => p.IsDeleted == false)
-            return View(db.Product.Where(p => p.IsDeleted == false).OrderByDescending(p => p.ProductId).Take(10).ToList());
+            // 使用EntityFramework
+            //return View(db.Product.Where(p => p.IsDeleted == false).OrderByDescending(p => p.ProductId).Take(10).ToList());
+
+            // 改用Repository
+            //ProductRepository repo = new ProductRepository();
+            //repo.UnitOfWork = new EFUnitOfWork();
+            //var data = this.repo.All().Where(p => p.IsDeleted == false).OrderBy(p => p.ProductId).Take(10).ToList();
+
+            // 改用Override
+            var data = this.repo.Get所有產品_依據ProductId大到小排序(10);
+
+            return View(data);
         }
 
         // GET: Products/Details/5
@@ -28,11 +36,17 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+
+            // 使用EntityFramework
+            // Product product = db.Product.Find(id);
+
+            // 改用Repository
+            var product = this.repo.Find(id.Value);
             if (product == null)
             {
                 return HttpNotFound();
             }
+
             return View(product);
         }
 
@@ -51,8 +65,14 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Product.Add(product);
-                db.SaveChanges();
+                // 使用EntityFramework
+                //db.Product.Add(product);
+                //db.SaveChanges();
+
+                // 改用Repository
+                this.repo.Add(product);
+                this.repo.UnitOfWork.Commit();
+
                 return RedirectToAction("Index");
             }
 
@@ -66,11 +86,18 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+
+            // 使用EntityFramework
+            //Product product = db.Product.Find(id);
+
+            // 改用Repository
+            var product = this.repo.Find(id.Value);
+
             if (product == null)
             {
                 return HttpNotFound();
             }
+
             return View(product);
         }
 
@@ -83,8 +110,11 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
+                // 使用EntityFramework
+                var db = this.repo.UnitOfWork.Context;
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -98,7 +128,12 @@ namespace MVC5Course.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Product product = db.Product.Find(id);
+            // 使用EntityFramework
+            //Product product = db.Product.Find(id);
+
+            // 改用Repository
+            var product = this.repo.Find(id.Value);
+            
             if (product == null)
             {
                 return HttpNotFound();
@@ -112,11 +147,19 @@ namespace MVC5Course.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = db.Product.Find(id);
+            // 使用EntityFramework
+            //Product product = db.Product.Find(id);
             // db.Product.Remove(product);
-            product.IsDeleted = true;
+            //product.IsDeleted = true;
+            //db.SaveChanges();
 
-            db.SaveChanges();
+            // 改用Repository
+            Product product = this.repo.Find(id);
+            this.repo.Delete(product);  // 覆寫Delete
+
+            // product.IsDeleted = true;
+            this.repo.UnitOfWork.Commit();
+
             return RedirectToAction("Index");
         }
 
@@ -124,8 +167,10 @@ namespace MVC5Course.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
+                this.repo.UnitOfWork.Context.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }
