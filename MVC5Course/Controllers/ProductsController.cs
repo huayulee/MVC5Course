@@ -105,19 +105,33 @@ namespace MVC5Course.Controllers
         // POST: Products/Edit/5
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // 使用EntityFramework
+        //        var db = this.repo.UnitOfWork.Context;
+        //        db.Entry(product).State = EntityState.Modified;
+        //        db.SaveChanges();
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(product);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        public ActionResult Edit(int id, FormCollection form)
         {
-            if (ModelState.IsValid)
+            var product = this.repo.Find(id);
+            if (TryUpdateModel<Product>(product))
             {
-                // 使用EntityFramework
-                var db = this.repo.UnitOfWork.Context;
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-
+                this.repo.UnitOfWork.Commit();
                 return RedirectToAction("Index");
             }
+
             return View(product);
         }
 
