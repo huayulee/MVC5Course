@@ -7,13 +7,13 @@ using MVC5Course.Models;
 
 namespace MVC5Course.Controllers
 {
-    public class ProductsController : Controller
+    public class ProductsController : BaseController
     {
         //private FabricsEntities db = new FabricsEntities();
         private ProductRepository repo = RepositoryHelper.GetProductRepository();
 
         // GET: Products
-        [Route("Prod/List")]
+        [Route("☸Prod☸/List")]
         public ActionResult Index()
         {
             // 使用EntityFramework
