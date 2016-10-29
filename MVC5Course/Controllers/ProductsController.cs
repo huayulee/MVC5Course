@@ -13,6 +13,7 @@ namespace MVC5Course.Controllers
         private ProductRepository repo = RepositoryHelper.GetProductRepository();
 
         // GET: Products
+        [Route("Prod/List")]
         public ActionResult Index()
         {
             // 使用EntityFramework
