@@ -67,5 +67,11 @@ namespace MVC5Course.Controllers
 
             return RedirectToAction("ProductList");
         }
+
+        public ActionResult ErrorHandler()
+        {
+            throw new InvalidOperationException("ERRRRROR");
+            return View();
+        }
     }
 }

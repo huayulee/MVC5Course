@@ -8,9 +8,10 @@ namespace MVC5Course.Controllers
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             filterContext.Controller.ViewBag.whereAmi = string.Empty;
+            
             if (filterContext.HttpContext.Request.IsLocal)
             {
-                filterContext.Controller.ViewBag.whereAmi = "Local";
+                filterContext.Controller.ViewBag.whereAmi = filterContext.HttpContext.Request.Url;
             }
 
         }
