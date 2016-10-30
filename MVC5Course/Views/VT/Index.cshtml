@@ -1,4 +1,9 @@
 ﻿@{
+    if (IsAjax)
+    {
+        this.Layout = "";
+    }
+
     ////this.Layout = string.Empty;
     ViewBag.Title = "排版";
     int[] data = new int[] { 1, 2, 3, 4, 5 };
