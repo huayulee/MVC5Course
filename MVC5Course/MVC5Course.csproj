@@ -179,6 +179,7 @@
     <Compile Include="ActionFilter\CheckModeAttribute.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\EFController.cs" />
+    <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="ActionFilter\LocalDebugOnlyAttribute.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -439,6 +440,7 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Form\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
