@@ -53,8 +53,8 @@ namespace MVC5Course.Controllers
         [HttpPost]
         public ActionResult BatchUpdate(IList<ProductBatchUpdateViewModel> items)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 foreach (var item in items)
                 {
                     var product = repo.Find(item.ProductId);
@@ -65,7 +65,7 @@ namespace MVC5Course.Controllers
                 }
 
                 this.repo.UnitOfWork.Commit();
-            }
+            //}
 
             return RedirectToAction("ProductList");
         }
