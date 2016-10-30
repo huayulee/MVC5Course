@@ -9,6 +9,7 @@ using MVC5Course.Models.ViewModels;
 
 namespace MVC5Course.Controllers
 {
+    [HandleError(ExceptionType = typeof(Exception), View = "Error_CommonException")]
     [HandleError(ExceptionType =typeof(DbEntityValidationException),View = "Error_InvalidOperationException")]
     public class MBController : BaseController
     {
@@ -46,6 +47,7 @@ namespace MVC5Course.Controllers
 
         public ActionResult ProductList()
         {
+            ViewBag.errMsg = TempData["ErrorMessage"];
             var data = this.repo.Get所有產品_依據ProductId大到小排序(10);
             return View(data);
         }
@@ -53,8 +55,8 @@ namespace MVC5Course.Controllers
         [HttpPost]
         public ActionResult BatchUpdate(IList<ProductBatchUpdateViewModel> items)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid) //<--這裡會驗證ViewModel驗證
+            {
                 foreach (var item in items)
                 {
                     var product = repo.Find(item.ProductId);
@@ -64,8 +66,19 @@ namespace MVC5Course.Controllers
                     product.Stock = item.Stock;
                 }
 
-                this.repo.UnitOfWork.Commit();
-            //}
+                this.repo.UnitOfWork.Commit(); // <-- 這裡會驗證Model驗證
+            }
+            else
+            {
+                foreach(var a in ModelState.Values)
+                {
+                    foreach(var b in a.Errors)
+                    {
+                        string bb = b.ErrorMessage;
+                        TempData["ErrorMessage"] = b.ErrorMessage;
+                    }
+                }
+            }
 
             return RedirectToAction("ProductList");
         }

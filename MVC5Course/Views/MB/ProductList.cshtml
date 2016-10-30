@@ -5,9 +5,12 @@
     var items = Model.ToList();
 }
 
-<h2>產品批次更新</h2>
+<h2>產品批次更新(價格不能等於7878)</h2>
 
-
+@if (ViewBag.errMsg != null)
+{
+    <h1>@ViewBag.errMsg</h1>
+}
 
 @using (Html.BeginForm("BatchUpdate", "MB"))
 {

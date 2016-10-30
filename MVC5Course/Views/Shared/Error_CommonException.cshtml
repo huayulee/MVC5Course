@@ -1,0 +1,11 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "錯誤";
+
+    var ex = Model.Exception as Exception;
+}
+
+<h1 class="text-danger">@ex.Message</h1>
+
+

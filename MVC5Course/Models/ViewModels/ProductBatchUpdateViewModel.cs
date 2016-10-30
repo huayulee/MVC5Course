@@ -17,10 +17,10 @@ namespace MVC5Course.Models.ViewModels
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            int max = 1000;
+            int max = 7878;
             if (this.Price == max)
             {
-                yield return new ValidationResult("哈哈哈" + max);
+                yield return new ValidationResult("ViewModel驗證沒通過，原因: 價格不能等於" + max);
             }
         }
     }
