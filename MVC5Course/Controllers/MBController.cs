@@ -9,7 +9,7 @@ using MVC5Course.Models.ViewModels;
 
 namespace MVC5Course.Controllers
 {
-    [HandleError(ExceptionType = typeof(Exception), View = "Error_CommonException")]
+    ////[HandleError(ExceptionType = typeof(Exception), View = "Error_CommonException")]
     [HandleError(ExceptionType =typeof(DbEntityValidationException),View = "Error_InvalidOperationException")]
     public class MBController : BaseController
     {
