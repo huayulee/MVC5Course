@@ -149,4 +149,4 @@
 @Html.Action("Index", "Orders", new { clientId = Model.ClientId });
 <hr/>
 <h1>使用Html.Partial</h1>
-@Html.Partial("../Orders/Index", Model.Order)
+@Html.Partial("../Orders/Index", Model.Order.Take(10))
