@@ -67,11 +67,16 @@
 </table>
 
 @Html.PagedListPager(Model as IPagedList, p => Url.Action("Index", new { pageNo = p }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("#Main"))
-
+@{
+    ViewBag.msg = @"123\\
+alert('ttt');
+naaa";
+}
 @section Scripts{
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script>
-
+        var str ='@Ajax.JavaScriptStringEncode(ViewBag.msg)';
+        console.log(str);
         function finish() {
             $('#modal-dialog').modal('show');
         }
