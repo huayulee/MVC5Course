@@ -1,4 +1,6 @@
-﻿@model IEnumerable<MVC5Course.Models.Product>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IEnumerable<MVC5Course.Models.Product>
 
 @{
     ViewBag.Title = "Index";
@@ -50,16 +52,23 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
             @Html.ActionLink("Details", "Details", new { id = item.ProductId })|
-            @Ajax.ActionLink("Details(Ajax)", "Details",new { id = item.ProductId }, new AjaxOptions { UpdateTargetId = "dddd" })
-            |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+            @Ajax.ActionLink("Details(Ajax)", "Details", new { id = item.ProductId }, new AjaxOptions { UpdateTargetId = "modal-dialog-content", OnSuccess = "finish" })|
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })|
+            @Ajax.ActionLink("Delete(Ajax)", "Delete", new { id = item.ProductId }, new AjaxOptions { UpdateTargetId = "modal-dialog-content", OnSuccess = "finish" })
         </td>
     </tr>
 }
     
 </table>
-<div id="dddd"></div>
+
+@Html.PagedListPager(Model as IPagedList, p => Url.Action("Index", new { pageNo = p }))
+
 @section Scripts{
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
 
+        function finish() {
+            $('#modal-dialog').modal('show');
+        }
+    </script>
 }

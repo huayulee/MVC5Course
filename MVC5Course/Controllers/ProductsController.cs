@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using MVC5Course.Models;
+using PagedList;
 
 namespace MVC5Course.Controllers
 {
@@ -17,7 +18,7 @@ namespace MVC5Course.Controllers
         [LocalDebugOnly]
         //[OutputCache(Duration =60,Location = System.Web.UI.OutputCacheLocation.Server)]
         [Route("☸Prod☸/List")]
-        public ActionResult Index()
+        public ActionResult Index(int pageNo = 1)
         {
             // 使用EntityFramework
             //return View(db.Product.Where(p => p.IsDeleted == false).OrderByDescending(p => p.ProductId).Take(10).ToList());
@@ -28,7 +29,8 @@ namespace MVC5Course.Controllers
             //var data = this.repo.All().Where(p => p.IsDeleted == false).OrderBy(p => p.ProductId).Take(10).ToList();
 
             // 改用Override
-            var data = this.repo.Get所有產品_依據ProductId大到小排序(10);
+            // var data = this.repo.Get所有產品_依據ProductId大到小排序(10);
+            var data = this.repo.All().OrderBy(p => p.ProductId).ToPagedList(pageNo, 10);
 
             return View(data);
         }
