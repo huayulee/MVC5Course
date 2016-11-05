@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
+using System.Web.Http;//web api 自己的命名公空間
 
 namespace MVC5Course
 {
