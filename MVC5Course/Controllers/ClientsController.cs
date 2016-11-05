@@ -11,18 +11,23 @@ using MVC5Course.Models.ViewModels;
 
 namespace MVC5Course.Controllers
 {
+    [Authorize]
     public class ClientsController : BaseController
     {
         // GET: Clients
-        public ActionResult Index(string search)
+        public ActionResult Index(string search, int? creditRating, string gender)
         {
             var client = db.Client.Include(c => c.Occupation);
             if (!string.IsNullOrEmpty(search))
             {
-                client = client.Where(c => c.FirstName.Contains(search));
+                client = client.Where(c => c.FirstName.Contains(search) && c.Gender.Contains(gender));
             }
 
+            var options = (from p in db.Client select p.CreditRating).Distinct().OrderBy(p => p).ToList();
+            ViewBag.CreditRating = new SelectList(options);
+            ViewBag.Gender = new SelectList(new char[] { 'M', 'F' });
             client = client.OrderByDescending(p => p.ClientId).Take(10);
+
             return View(client);
         }
 

@@ -11,9 +11,12 @@
 </p>
     <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
-            <input type="search" name="search" value="" class="form-control" placeholder="請輸入查詢條件" />
+            @*<input type="search" name="search" value="" class="form-control" placeholder="請輸入查詢條件" />*@
+            @Html.TextBox("search")
+            @Html.DropDownList("CreditRating", "--請選擇評價--")
+            @Html.DropDownList("Gender", "--請選擇性別--")
         </div>
-        <input type="submit" value="查詢" class="btn btn-info" />
+        <input type="submit" value="查詢" />
 
     </form>
 
